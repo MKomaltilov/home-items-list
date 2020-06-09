@@ -6,7 +6,7 @@
 </head>
 <body>
     {% for item in items %}
-        {{ item.name }}
+        <a href="{% url 'get_item' item.id %}">{{ item.name }}</a>
     {% empty %}
         <p>There is no items here...</p>
     {% endfor %}
