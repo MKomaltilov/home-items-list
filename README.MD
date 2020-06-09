@@ -1,6 +1,8 @@
 This is the application for creating your own home items list, put them into categories and rooms
 
 #HOW TO RUN DEVELOPMENT SERVER
+================
+
 prerequisites:
 *python 3.8+, pip*
 
