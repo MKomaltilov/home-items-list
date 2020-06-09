@@ -1,0 +1,1 @@
+This is the application for creating your own home items list, put them into categories and rooms

@@ -1,0 +1,4 @@
+venv/
+.idea/
+db.sqlite3
+home_items_list/settings.py
