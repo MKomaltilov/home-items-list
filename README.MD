@@ -1,6 +1,9 @@
 This is the application for creating your own home items list, put them into categories and rooms
 
-#HOW TO RUN DEVELOPMENTSERVER
+#HOW TO RUN DEVELOPMENT SERVER
+prerequisites:
+*python 3.8+, pip*
+
 1. in project root folder create virtualenv (https://docs.python.org/3/library/venv.html)
 1. enter to this virtualenv
 1. run *pip install -r requirements.txt*
