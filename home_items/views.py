@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.http import Http404
 
-from .models import Item
+from .models import Item, Category
 
 
-def index(request):
-    items = Item.objects.all()
+def items_overview(request):
+    categories = Category.objects.all()
     context = {
-        'items': items
+        'categories': categories
     }
     return render(request, 'index.html', context)
 

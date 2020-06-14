@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% for item in items %}
-        <a href="{% url 'get_item' item.id %}">{{ item.name }}</a>
-    {% empty %}
-        <p>There is no items here...</p>
-    {% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h1>List of items in categories</h1>
+{% for category in categories %}
+<div class="card">
+    <div class="card-header">
+        {{ category }}
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for item in category.items.all %}
+            <li class="list-group-item"><a href="{% url 'get_item' item.id %}">{{ item.name }}</a></li>
+        {% empty %}
+            <p>There is no items here...</p>
+        {% endfor %}
+    </ul>
+</div>
+<br />
+{% endfor %}
+{% endblock content %}
