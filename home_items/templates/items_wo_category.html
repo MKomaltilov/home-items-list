@@ -6,9 +6,22 @@
 {% endblock header %}
 
 {% block content %}
+<a href="{% url 'items' %}">All items</a> ({{ items.count }}) |
+<a href="{% url 'items_wo_category' %}">Items without category</a> ({{ items_wo_category_count }}) |
+<a href="{% url 'items_wo_room' %}">Items without room</a> ({{ items_wo_room_count }}) |
+<a href="{% url 'family_items' %}">Items without owner (Family items)</a> ({{ family_items_count }})<br /><hr />
+
 <ul>
     {% for item in items %}
-    <li><a href="{% url 'item' item.id %}">{{ item }}</a></li>
+    <li>
+        <a href="{% url 'item' item.id %}">{{ item }}</a>
+        {% if item.room %}
+            <a href="{% url 'room' item.room.id %}"><span class="badge badge-dark">{{ item.room }}</span></a>
+        {% endif %}
+        {% if item.owner %}
+            <a href="{% url 'user' item.owner.id %}"><span class="badge badge-info">{{ item.owner.get_full_name }}</span></a>
+        {% endif %}
+    </li>
     {% endfor %}
 </ul>
 {% endblock content %}

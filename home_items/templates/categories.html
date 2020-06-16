@@ -6,8 +6,8 @@
 {% endblock header %}
 
 {% block content %}
+<a href="{% url 'items_wo_category' %}">Items without category</a> ({{ items_wo_category_count }}) <br /><hr />
 <ul>
-    <li><a href="{% url 'items_wo_category' %}">Items without category</a> ({{ items_wo_category_count }})</li>
     {% for category in categories %}
     <li><a href="{% url 'category' category.id %}">{{ category }}</a> ({{ category.items.count }})</li>
     {% endfor %}

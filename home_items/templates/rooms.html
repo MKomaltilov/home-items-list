@@ -6,6 +6,7 @@
 {% endblock header %}
 
 {% block content %}
+<a href="{% url 'items_wo_room' %}">Items without room</a> ({{ items_wo_room_count }}) <br /><hr />
 <ul>
     {% for room in rooms %}
     <li><a href="{% url 'room' room.id %}">{{ room }}</a> ({{ room.items.count }})</li>
