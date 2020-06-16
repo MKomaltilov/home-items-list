@@ -6,7 +6,7 @@
 {% endblock header %}
 
 {% block content %}
-<a href="{% url 'items' %}">All items</a> ({{ items.count }}) |
+<a href="{% url 'items' %}">All items</a> ({{ items_count }}) |
 <a href="{% url 'items_wo_category' %}">Items without category</a> ({{ items_wo_category_count }}) |
 <a href="{% url 'items_wo_room' %}">Items without room</a> ({{ items_wo_room_count }}) |
 <a href="{% url 'family_items' %}">Items without owner (Family items)</a> ({{ family_items_count }})<br /><hr />

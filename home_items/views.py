@@ -6,9 +6,15 @@ from .models import Item, Category, Room
 
 
 def items_overview(request):
-    items = Item.objects.all().order_by('name')
+    items = Item.objects\
+        .prefetch_related('categories')\
+        .select_related('room')\
+        .select_related('owner')\
+        .all()\
+        .order_by('name')
     context = {
         'items': items,
+        'items_count': Item.objects.all().count(),
         'family_items_count': Item.objects.filter(owner=None).count(),
         'items_wo_category_count': Item.objects.filter(categories=None).count(),
         'items_wo_room_count': Item.objects.filter(room=None).count()
@@ -18,7 +24,11 @@ def items_overview(request):
 
 def get_item(request, item_id):
     try:
-        item = Item.objects.get(pk=item_id)
+        item = Item.objects\
+            .prefetch_related('categories') \
+            .select_related('room') \
+            .select_related('owner') \
+            .get(pk=item_id)
     except Item.DoesNotExist:
         raise Http404
     context = {
@@ -28,9 +38,15 @@ def get_item(request, item_id):
 
 
 def items_wo_category(request):
-    items = Item.objects.filter(categories=None).order_by('name')
+    items = Item.objects\
+        .prefetch_related('categories')\
+        .select_related('room')\
+        .select_related('owner')\
+        .filter(categories=None)\
+        .order_by('name')
     context = {
         'items': items,
+        'items_count': Item.objects.all().count(),
         'family_items_count': Item.objects.filter(owner=None).count(),
         'items_wo_category_count': Item.objects.filter(categories=None).count(),
         'items_wo_room_count': Item.objects.filter(room=None).count()
@@ -49,8 +65,8 @@ def categories_overview(request):
 
 def get_category(request, category_id):
     try:
-        category = Category.objects.get(pk=category_id)
-    except Item.DoesNotExist:
+        category = Category.objects.prefetch_related('items').get(pk=category_id)
+    except Category.DoesNotExist:
         raise Http404
     context = {
         'category': category
@@ -69,8 +85,8 @@ def rooms_overview(request):
 
 def get_room(request, room_id):
     try:
-        room = Room.objects.get(pk=room_id)
-    except Item.DoesNotExist:
+        room = Room.objects.prefetch_related('items').get(pk=room_id)
+    except Room.DoesNotExist:
         raise Http404
     context = {
         'room': room
@@ -90,7 +106,7 @@ def users_overview(request):
 def get_user(request, user_id):
     try:
         user = User.objects.get(pk=user_id)
-    except Item.DoesNotExist:
+    except User.DoesNotExist:
         raise Http404
     context = {
         'user': user
@@ -99,9 +115,15 @@ def get_user(request, user_id):
 
 
 def family_items(request):
-    items = Item.objects.filter(owner=None).order_by('name')
+    items = Item.objects\
+        .prefetch_related('categories')\
+        .select_related('room')\
+        .select_related('owner')\
+        .filter(owner=None)\
+        .order_by('name')
     context = {
         'items': items,
+        'items_count': Item.objects.all().count(),
         'family_items_count': Item.objects.filter(owner=None).count(),
         'items_wo_category_count': Item.objects.filter(categories=None).count(),
         'items_wo_room_count': Item.objects.filter(room=None).count()
@@ -110,9 +132,15 @@ def family_items(request):
 
 
 def items_wo_room(request):
-    items = Item.objects.filter(room=None).order_by('name')
+    items = Item.objects\
+        .prefetch_related('categories')\
+        .select_related('room')\
+        .select_related('owner')\
+        .filter(room=None)\
+        .order_by('name')
     context = {
         'items': items,
+        'items_count': Item.objects.all().count(),
         'family_items_count': Item.objects.filter(owner=None).count(),
         'items_wo_category_count': Item.objects.filter(categories=None).count(),
         'items_wo_room_count': Item.objects.filter(room=None).count()
