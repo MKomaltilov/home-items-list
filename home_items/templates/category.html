@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
+{% block header %}
+    Category: {{ category }}
+{% endblock header %}
+
 {% block content %}
-    {{ category }}
+<i>{{ category.description }}</i>
+<ul>
+    {% for item in category.items.all %}
+        <li><a href="{% url 'item' item.id %}">{{ item }}</a></li>
+    {% endfor %}
+</ul>
 {% endblock content %}

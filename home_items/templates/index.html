@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
+{% block header %}
+    Items
+{% endblock header %}
+
 {% block content %}
-<h1>Items</h1>
 <ul>
     {% for item in items %}
-    <li><a href="{% url 'item' item.id %}">{{ item }}</a></li>
+    <li>
+        <a href="{% url 'item' item.id %}">{{ item }}</a>
+        {% for category in item.categories.all %}
+            <a href="{% url 'category' category.id %}"><span class="badge badge-info">{{ category }}</span></a>
+        {% endfor %}
+        {% if item.room %}
+            <a href="{% url 'room' item.room.id %}"><span class="badge badge-dark">{{ item.room }}</span></a>
+        {% endif %}
+    </li>
     {% endfor %}
 </ul>
 {% endblock content %}

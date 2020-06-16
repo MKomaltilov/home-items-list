@@ -26,7 +26,7 @@ class Item(models.Model):
     description = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='items')
     categories = models.ManyToManyField('Category', blank=True, related_name='items')
-    rooms = models.ForeignKey('Room', null=True, blank=True, on_delete=models.SET_NULL, related_name='items')
+    room = models.ForeignKey('Room', null=True, blank=True, on_delete=models.SET_NULL, related_name='items')
 
     def __str__(self):
         return self.name

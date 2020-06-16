@@ -1,11 +1,15 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
+{% block header %}
+    Categories
+{% endblock header %}
+
 {% block content %}
-<h1>Categories</h1>
 <ul>
+    <li><a href="{% url 'items_wo_category' %}">Items without category</a> ({{ items_wo_category_count }})</li>
     {% for category in categories %}
-    <li><a href="{% url 'category' category.id %}">{{ category }}</a></li>
+    <li><a href="{% url 'category' category.id %}">{{ category }}</a> ({{ category.items.count }})</li>
     {% endfor %}
 </ul>
 {% endblock content %}

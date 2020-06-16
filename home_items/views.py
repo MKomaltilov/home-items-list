@@ -23,10 +23,19 @@ def get_item(request, item_id):
     return render(request, 'item.html', context)
 
 
+def items_wo_category(request):
+    items = Item.objects.filter(categories=None).order_by('name')
+    context = {
+        'items': items
+    }
+    return render(request, 'items_wo_category.html', context)
+
+
 def categories_overview(request):
     categories = Category.objects.all().order_by('name')
     context = {
-        'categories': categories
+        'categories': categories,
+        'items_wo_category_count': Item.objects.filter(categories=None).count()
     }
     return render(request, 'categories.html', context)
 

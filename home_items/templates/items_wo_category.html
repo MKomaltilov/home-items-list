@@ -2,13 +2,13 @@
 {% load bootstrap4 %}
 
 {% block header %}
-    Rooms
+    Items without category
 {% endblock header %}
 
 {% block content %}
 <ul>
-    {% for room in rooms %}
-    <li><a href="{% url 'room' room.id %}">{{ room }}</a> ({{ room.items.count }})</li>
+    {% for item in items %}
+    <li><a href="{% url 'item' item.id %}">{{ item }}</a></li>
     {% endfor %}
 </ul>
 {% endblock content %}

@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
+{% block header %}
+    Room: {{ room }}
+{% endblock header %}
+
 {% block content %}
-    {{ room }}
+
+<i>{{ room.description }}</i>
+<ul>
+    {% for item in room.items.all %}
+        <li><a href="{% url 'item' item.id %}">{{ item }}</a></li>
+    {% endfor %}
+</ul>
 {% endblock content %}
