@@ -13,5 +13,5 @@ urlpatterns = [
     path('rooms/no-room', items.items_wo_room, name='items_wo_room'),
     path('users/', users.users_overview, name='users'),
     path('users/<int:user_id>', users.get_user, name='user'),
-    path('users/family/', items.family_items, name='family_items')
+    path('users/family/', items.items_wo_owner, name='family_items')
 ]

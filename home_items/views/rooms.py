@@ -10,7 +10,7 @@ def rooms_overview(request):
         'rooms': rooms,
         'items_wo_room_count': Item.objects.filter(room=None).count()
     }
-    return render(request, 'rooms.html', context)
+    return render(request, 'rooms/rooms.html', context)
 
 
 def get_room(request, room_id):
@@ -21,4 +21,4 @@ def get_room(request, room_id):
     context = {
         'room': room
     }
-    return render(request, 'room.html', context)
+    return render(request, 'rooms/room.html', context)

@@ -4,23 +4,6 @@ from django.http import Http404
 from home_items.models import Item
 
 
-def items_wo_room(request):
-    items = Item.objects\
-        .prefetch_related('categories')\
-        .select_related('room')\
-        .select_related('owner')\
-        .filter(room=None)\
-        .order_by('name')
-    context = {
-        'items': items,
-        'items_count': Item.objects.all().count(),
-        'family_items_count': Item.objects.filter(owner=None).count(),
-        'items_wo_category_count': Item.objects.filter(categories=None).count(),
-        'items_wo_room_count': Item.objects.filter(room=None).count()
-    }
-    return render(request, 'items/items_wo_room.html', context)
-
-
 def items_overview(request):
     items = Item.objects\
         .prefetch_related('categories')\
@@ -70,7 +53,7 @@ def items_wo_category(request):
     return render(request, 'items/items_wo_category.html', context)
 
 
-def family_items(request):
+def items_wo_owner(request):
     items = Item.objects\
         .prefetch_related('categories')\
         .select_related('room')\
@@ -85,4 +68,22 @@ def family_items(request):
         'items_wo_room_count': Item.objects.filter(room=None).count()
     }
     return render(request, 'items/family_items.html', context)
+
+
+
+def items_wo_room(request):
+    items = Item.objects\
+        .prefetch_related('categories')\
+        .select_related('room')\
+        .select_related('owner')\
+        .filter(room=None)\
+        .order_by('name')
+    context = {
+        'items': items,
+        'items_count': Item.objects.all().count(),
+        'family_items_count': Item.objects.filter(owner=None).count(),
+        'items_wo_category_count': Item.objects.filter(categories=None).count(),
+        'items_wo_room_count': Item.objects.filter(room=None).count()
+    }
+    return render(request, 'items/items_wo_room.html', context)
 
