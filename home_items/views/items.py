@@ -67,8 +67,7 @@ def items_wo_owner(request):
         'items_wo_category_count': Item.objects.filter(categories=None).count(),
         'items_wo_room_count': Item.objects.filter(room=None).count()
     }
-    return render(request, 'items/family_items.html', context)
-
+    return render(request, 'items/items_wo_owner.html', context)
 
 
 def items_wo_room(request):
