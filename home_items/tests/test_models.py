@@ -1,5 +1,8 @@
+import sqlite3
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.db.utils import IntegrityError
+from django.db.transaction import TransactionManagementError
 from home_items.models import Room, Category, Item, ItemList
 
 User = get_user_model()
