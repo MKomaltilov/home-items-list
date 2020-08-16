@@ -9,6 +9,7 @@ class Room(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
+    list = models.ForeignKey('ItemList', on_delete=models.CASCADE, related_name='rooms')
 
     def __str__(self):
         return self.name
@@ -18,6 +19,7 @@ class Category(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
+    list = models.ForeignKey('ItemList', on_delete=models.CASCADE, related_name='categories')
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -33,16 +35,13 @@ class Item(models.Model):
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='items')
     categories = models.ManyToManyField('Category', blank=True, related_name='items')
     room = models.ForeignKey('Room', null=True, blank=True, on_delete=models.SET_NULL, related_name='items')
+    list = models.ForeignKey('ItemList', on_delete=models.CASCADE, related_name='items')
 
     def __str__(self):
         return self.name
 
 
 class ItemList(models.Model):
-    # name
-    # description
-    # owner
-    # users_with_access
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
