@@ -7,7 +7,7 @@ admin.site.register(Room)
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'room', 'owner')
+    list_display = ('name', 'room', 'owner', 'id')
     list_display_links = ('name', 'room', 'owner')
     list_filter = ('categories', 'room', 'owner')
     search_fields = ('name',)

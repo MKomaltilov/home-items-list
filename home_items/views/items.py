@@ -85,4 +85,3 @@ def items_wo_room(request):
         'items_wo_room_count': Item.objects.filter(room=None).count()
     }
     return render(request, 'items/items_wo_room.html', context)
-
