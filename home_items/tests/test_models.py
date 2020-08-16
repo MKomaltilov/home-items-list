@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from home_items.models import Room, Category, Item
+from home_items.models import Room, Category, Item, ItemList
 
 User = get_user_model()
 
@@ -9,7 +9,7 @@ class RoomModelTest(TestCase):
     def test_default_room_with_blank_description_can_be_created(self):
         room = Room.objects.create(name='test name')
         self.assertEqual(room.name, 'test name')
-        self.assertEqual(room.description, None)
+        self.assertIsNone(room.description)
 
     def test_room_with_name_and_description_can_be_created(self):
         room = Room.objects.create(name='test name', description='test description')
@@ -21,7 +21,7 @@ class CategoryModelTest(TestCase):
     def test_default_category_with_blank_description_can_be_created(self):
         category = Category.objects.create(name='test name')
         self.assertEqual(category.name, 'test name')
-        self.assertEqual(category.description, None)
+        self.assertIsNone(category.description)
 
     def test_category_with_name_and_description_can_be_created(self):
         category = Category.objects.create(name='test name', description='test description')
@@ -33,9 +33,9 @@ class ItemModelTest(TestCase):
     def test_default_item_can_be_created(self):
         item = Item.objects.create(name='test item')
         self.assertEqual(item.name, 'test item')
-        self.assertEqual(item.description, None)
-        self.assertEqual(item.owner, None)
-        self.assertEqual(item.room, None)
+        self.assertIsNone(item.description)
+        self.assertIsNone(item.owner)
+        self.assertIsNone(item.room)
         self.assertEqual(len(item.categories.all()), 0)
 
     def test_room_user_and_categories_can_be_added_to_item(self):
@@ -61,3 +61,13 @@ class ItemModelTest(TestCase):
         self.assertIn(category_one, item.categories.all())
         self.assertIn(category_three, item.categories.all())
         self.assertNotIn(category_two, item.categories.all())
+
+
+class ItemsListModelTest(TestCase):
+    def test_list_with_default_parameters_can_be_created(self):
+        owner = User.objects.create(username='user', password='123')
+        item_list = ItemList.objects.create(name='test list', owner=owner)
+        self.assertEqual(item_list.name, 'test list')
+        self.assertEqual(item_list.owner.username, 'user')
+        self.assertIsNone(item_list.description)
+        self.assertEqual(len(item_list.editors.all()), 0)

@@ -36,3 +36,15 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ItemList(models.Model):
+    # name
+    # description
+    # owner
+    # users_with_access
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='item_lists')
+    editors = models.ManyToManyField(User, related_name='shared_lists', blank=True)
