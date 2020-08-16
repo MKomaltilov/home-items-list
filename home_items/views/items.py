@@ -18,7 +18,7 @@ def items_overview(request):
         'items_wo_category_count': Item.objects.filter(categories=None).count(),
         'items_wo_room_count': Item.objects.filter(room=None).count()
     }
-    return render(request, 'items/index.html', context)
+    return render(request, 'items/overview.html', context)
 
 
 def get_item(request, item_id):

@@ -11,7 +11,7 @@ def users_overview(request):
         'users': users,
         'family_items_count': Item.objects.filter(owner=None).count()
     }
-    return render(request, 'users.html', context)
+    return render(request, 'users/overview.html', context)
 
 
 def get_user(request, user_id):
@@ -22,4 +22,4 @@ def get_user(request, user_id):
     context = {
         'user': user
     }
-    return render(request, 'user.html', context)
+    return render(request, 'users/user.html', context)

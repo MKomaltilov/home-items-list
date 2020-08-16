@@ -10,7 +10,7 @@ def categories_overview(request):
         'categories': categories,
         'items_wo_category_count': Item.objects.filter(categories=None).count()
     }
-    return render(request, 'categories.html', context)
+    return render(request, 'categories/overview.html', context)
 
 
 def get_category(request, category_id):
@@ -21,4 +21,4 @@ def get_category(request, category_id):
     context = {
         'category': category
     }
-    return render(request, 'category.html', context)
+    return render(request, 'categories/category.html', context)
