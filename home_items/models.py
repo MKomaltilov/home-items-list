@@ -47,3 +47,6 @@ class ItemList(models.Model):
     description = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='item_lists')
     editors = models.ManyToManyField(User, related_name='shared_lists', blank=True)
+
+    def __str__(self):
+        return self.name
