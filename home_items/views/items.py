@@ -3,14 +3,11 @@ from django.http import Http404
 
 from home_items.models import Item
 
+from ..services.items import get_all_items
+
 
 def items_overview(request):
-    items = Item.objects\
-        .prefetch_related('categories')\
-        .select_related('room')\
-        .select_related('owner')\
-        .all()\
-        .order_by('name')
+    items = get_all_items()
     context = {
         'items': items,
         'items_count': Item.objects.all().count(),
