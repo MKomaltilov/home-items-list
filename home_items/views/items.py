@@ -3,17 +3,14 @@ from django.http import Http404
 
 from home_items.models import Item
 
-from ..services.items import get_all_items
+from ..services.items import get_all_items, get_count_of_items
 
 
 def items_overview(request):
     items = get_all_items()
     context = {
         'items': items,
-        'items_count': Item.objects.all().count(),
-        'family_items_count': Item.objects.filter(owner=None).count(),
-        'items_wo_category_count': Item.objects.filter(categories=None).count(),
-        'items_wo_room_count': Item.objects.filter(room=None).count()
+        **get_count_of_items()
     }
     return render(request, 'items/overview.html', context)
 
@@ -42,10 +39,7 @@ def items_wo_category(request):
         .order_by('name')
     context = {
         'items': items,
-        'items_count': Item.objects.all().count(),
-        'family_items_count': Item.objects.filter(owner=None).count(),
-        'items_wo_category_count': Item.objects.filter(categories=None).count(),
-        'items_wo_room_count': Item.objects.filter(room=None).count()
+        **get_count_of_items()
     }
     return render(request, 'items/items_wo_category.html', context)
 
@@ -59,10 +53,7 @@ def items_wo_owner(request):
         .order_by('name')
     context = {
         'items': items,
-        'items_count': Item.objects.all().count(),
-        'family_items_count': Item.objects.filter(owner=None).count(),
-        'items_wo_category_count': Item.objects.filter(categories=None).count(),
-        'items_wo_room_count': Item.objects.filter(room=None).count()
+        **get_count_of_items()
     }
     return render(request, 'items/items_wo_owner.html', context)
 
@@ -76,9 +67,6 @@ def items_wo_room(request):
         .order_by('name')
     context = {
         'items': items,
-        'items_count': Item.objects.all().count(),
-        'family_items_count': Item.objects.filter(owner=None).count(),
-        'items_wo_category_count': Item.objects.filter(categories=None).count(),
-        'items_wo_room_count': Item.objects.filter(room=None).count()
+        **get_count_of_items()
     }
     return render(request, 'items/items_wo_room.html', context)
