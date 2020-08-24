@@ -34,8 +34,7 @@ class ItemsServiceTest(TestCase):
         items = get_all_items()
         self.assertEqual(len(items), 0)
 
-        user = User.objects.create(username='user', password='123')
-        item_list = ItemList.objects.create(name='test list', owner=user)
+        item_list = self._create_list()
         item = create_item('item one', item_list)
 
         items = get_all_items()
@@ -43,10 +42,19 @@ class ItemsServiceTest(TestCase):
         self.assertIn(item, items)
 
     def _create_items(self, amount=1, owner=False):
-        user = User.objects.create(username='user', password='123')
-        item_list = ItemList.objects.create(name='test list', owner=user)
+        user = self._create_user()
+        item_list = self._create_list(owner=user)
         for i in range(amount):
             if owner:
                 Item.objects.create(name=f'test item {i}', list=item_list, owner=user)
             else:
                 Item.objects.create(name=f'test item {i}', list=item_list)
+
+    def _create_list(self, owner=None):
+        if owner is None:
+            return ItemList.objects.create(name='test list', owner=self._create_user())
+        else:
+            return ItemList.objects.create(name='test list', owner=owner)
+
+    def _create_user(self):
+        return User.objects.create(username='user', password='123')
