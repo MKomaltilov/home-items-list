@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
 
-from home_items.models import Item
-
-from ..services.items import get_all_items, get_count_of_items
+from ..services.items import get_all_items, get_count_of_items, get_item_by_primary_key, get_items_with_filter
 
 
 def items_overview(request):
@@ -16,14 +14,7 @@ def items_overview(request):
 
 
 def get_item(request, item_id):
-    try:
-        item = Item.objects\
-            .prefetch_related('categories') \
-            .select_related('room') \
-            .select_related('owner') \
-            .get(pk=item_id)
-    except Item.DoesNotExist:
-        raise Http404
+    item = get_item_by_primary_key(item_id)
     context = {
         'item': item
     }
@@ -31,12 +22,7 @@ def get_item(request, item_id):
 
 
 def items_wo_category(request):
-    items = Item.objects\
-        .prefetch_related('categories')\
-        .select_related('room')\
-        .select_related('owner')\
-        .filter(categories=None)\
-        .order_by('name')
+    items = get_items_with_filter(categories=None)
     context = {
         'items': items,
         **get_count_of_items()
@@ -45,12 +31,7 @@ def items_wo_category(request):
 
 
 def items_wo_owner(request):
-    items = Item.objects\
-        .prefetch_related('categories')\
-        .select_related('room')\
-        .select_related('owner')\
-        .filter(owner=None)\
-        .order_by('name')
+    items = get_items_with_filter(owner=None)
     context = {
         'items': items,
         **get_count_of_items()
@@ -59,12 +40,7 @@ def items_wo_owner(request):
 
 
 def items_wo_room(request):
-    items = Item.objects\
-        .prefetch_related('categories')\
-        .select_related('room')\
-        .select_related('owner')\
-        .filter(room=None)\
-        .order_by('name')
+    items = get_items_with_filter(room=None)
     context = {
         'items': items,
         **get_count_of_items()
